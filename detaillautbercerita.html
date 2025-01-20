@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <style type="text/tailwindcss">
+    .grid-item {
+      @apply block px-4 py-2 hover:bg-gray-500 hover:text-white;
+    }
+    .nav-item {
+      @apply py-2 px-4 mx-4 text-white hover:text-gray-500;
+      border: 1px solid white;
+    }
+
+    .nav-item.active {
+     background-color: rgba(255, 255, 255, 0.2); /* Memberi warna latar belakang yang lebih redup */
+      color: rgba(255, 255, 255, 0.8); /* Memudar warna teks */
+    }
+    
+    .thumbnail {
+      width: 50px; /* Ukuran gambar kecil */
+      height: auto;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    .active-thumbnail {
+      border: 3px solid #f1d747; /* Border saat gambar kecil aktif */
+    }
+    
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background-color: rgba(17, 17, 18, 0.7); /* Transparansi pada background */
+    }
+
+    .review-section img {
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Menambahkan transisi untuk zoom dan shadow */
+}
+
+.review-section img:hover {
+  transform: scale(1.1); /* Membesarkan gambar 10% saat di-hover atau disentuh */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Menambahkan bayangan saat gambar membesar */
+  z-index: 10; /* Menjaga gambar tetap di atas elemen lain */
+}
+
+.review-section img:active {
+  transform: scale(1.05); /* Efek sedikit lebih kecil saat gambar disentuh */
+}
+
+.book-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 150px; /* Lebar lebih kecil */
+    height: 280px; /* Tinggi lebih kecil */
+    border: 1px solid #6c6c6c;
+    padding: 8px; /* Padding lebih kecil */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.book-image {
+    width: 105px; /* Lebar gambar lebih kecil */
+    height: 165px; /* Tinggi gambar lebih kecil */
+    object-fit: cover;
+    object-position: center;
+    margin: 4px auto 0 auto; /* Margin lebih kecil */
+    border-radius: 5px;
+    pointer-events: none;
+}
+
+.book-info {
+    padding: 8px; /* Padding lebih kecil */
+    margin-top: auto;
+}
+
+.book-title {
+    font-size: 0.85rem; /* Ukuran font lebih kecil */
+    font-weight: bold;
+    color: #333;
+    margin: 0.3rem 0; /* Margin lebih kecil */
+}
+
+.book-author {
+    font-size: 0.75rem; /* Ukuran font lebih kecil */
+    color: #777;
+    margin: 0;
+}
+
+#history-section {
+    text-align: center; /* Agar teks H2 berada di tengah */
+}
+
+.grid {
+    justify-content: center; /* Memusatkan grid secara horizontal */
+}
+
+.book-card {
+    margin: 0 auto; /* Memastikan setiap kotak berada di tengah */
+}
+
+h2 {
+    margin-bottom: 20px; /* Memberi jarak antara judul dan grid */
+}
+
+  </style>
+  <script>
+    function changeMainImage(imageSrc, thumbnail) {
+      // Ganti gambar utama
+      document.getElementById("mainImage").src = imageSrc;
+
+      // Tambahkan border pada thumbnail yang aktif
+      const thumbnails = document.querySelectorAll('.thumbnail');
+      thumbnails.forEach(thumb => thumb.classList.remove('active-thumbnail'));
+      thumbnail.classList.add('active-thumbnail');
+    }
+
+    // Fungsi untuk membuka modal gambar
+    function openSampleModal() {
+      const modal = document.getElementById("sampleModal");
+      modal.classList.remove("hidden");
+    }
+
+    // Fungsi untuk menutup modal gambar
+    function closeSampleModal() {
+      const modal = document.getElementById("sampleModal");
+      modal.classList.add("hidden");
+    }
+
+    // Set default active thumbnail
+    window.onload = function() {
+      const firstThumbnail = document.querySelector('.thumbnail');
+      firstThumbnail.classList.add('active-thumbnail');  // Border pertama otomatis aktif
+    }
+  </script>
+  <title>Rekomendasi Buku</title>
+</head>
+<body class="text-gray-800">
+
+  <!-- Header yang Sticky -->
+  <header class="shadow z-50">
+    <nav class="container mx-auto py-4 px-10 flex justify-between items-center bg-opacity-80 backdrop-blur">
+      <a href="#" class="text-3xl font-bold text-gray-100">BookSphere</a>
+      <ul class="flex space-x-10">
+        <li><a href="index.html" class="nav-item">HOME</a></li>
+        <li><a href="genre.html" class="nav-item active">GENRE</a></li>
+        <li><a href="about.html" class="nav-item">ABOUT</a></li>
+        <li><a href="contact.html" class="nav-item">CONTACT</a></li>
+      </ul>
+    </nav>
+  </header>
+  </style>
+</head>
+
+<section class="bg-white py-20">
+  <div class="container mx-auto px-6 lg:px-20">
+    <div class="flex flex-col lg:flex-row items-start space-y-10 lg:space-y-0">
+      <!-- Gambar Buku -->
+      <div class="lg:w-1/3 mb-4 lg:mb-0">
+        <img id="mainImage" src="home/1.jpg" alt="Buku Laut Bercerita" class="w-full h-auto rounded-lg shadow-lg">
+        
+        <!-- Gambar Kecil di bawah Gambar Utama -->
+        <div class="flex justify-center mt-4 space-x-4">
+          <img src="home/1.jpg" alt="Cover Buku 1" class="thumbnail active-thumbnail" onclick="changeMainImage('home/1.jpg', this)">
+          <img src="home/s1.jpg" alt="Cover Buku 2" class="thumbnail" onclick="changeMainImage('home/s1.jpg', this)">
+        </div>          
+
+        <div class="pt-10 ">
+          <img src="review/laut.png" alt="">
+          <p class="text-center text-[12px] italic">in goodreads</p>
+          <p class="pt-10 ml-24">
+            <a href="https://www.gramedia.com/products/laut-bercerita" class="text-white px-6 py-3 inline-block bg-blue-500 rounded-lg" target="_blank">Kunjungi Gramedia</a>
+          </p>  
+        </div>
+      </div>
+
+        <!-- Detail Buku -->
+        <div class="lg:w-2/3 lg:pl-16">
+            <div class="flex items-center space-x-4 mb-2">
+            <h1 class="text-4xl font-bold text-gray-600 mb-2">Laut Bercerita</h1>
+          </div>
+          <div class="flex items-center space-x-4 mb-22">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4 pt-3">Leila S. Chudori</h2>
+
+          </div>
+          
+          <!-- Sinopsis -->
+          <p class="text-gray-600 mb-6 text-justify">
+            Buku ini terdiri atas dua bagian. Bagian pertama mengambil sudut pandang seorang mahasiswa aktivis bernama Laut, menceritakan bagaimana Laut dan kawan-kawannya menyusun rencana, berpindah-pindah dalam pelarian, hingga tertangkap oleh pasukan rahasia. Sedangkan bagian kedua dikisahkan oleh Asmara, adik Laut. Bagian kedua mewakili perasaan keluarga korban penghilangan paksa, bagaimana pencarian mereka terhadap kerabat mereka yang tak pernah kembali.</p>
+            <p class="text-gray-600 mb-6 text-justify">Buku ini ditulis sebagai bentuk tribute bagi para aktivis yang diculik, yang kembali, dan yang tak kembali dan keluarga yang terus menerus sampai sekarang mencari-cari jawaban.</p>
+            <p class="text-gray-600 mb-6 text-justify">Novel ini merupakan perwujudan dalam bentuk fiksi bahwa kita sebagai bangsa Indonesia tidak boleh melupakan sejarah yang telah membentuk sekaligus menjadi tumpuan bangsa Ini. Novel ini juga mengajak pembaca menguak misteri-misteri bangsa ini yang mana tidak diajarkan di sekolah. Walaupun novel ini adalah fiksi, laut bercerita menunjukkan kepada pembaca bahwa negeri ini pernah memasuki masa pemerintahan yang kelam.</p>
+            <p class="text-gray-600 mb-6 text-justify">Laut Bercerita, novel terbaru Leila S. Chudori, bertutur tentang kisah keluarga yang kehilangan, sekumpulan sahabat yang merasakan kekosongan di dada, sekelompok orang yang gemar menyiksa dan lancar berkhianat, sejumlah keluarga yang mencari kejelasan makam anaknya, dan tentang cinta yang tak akan luntur.</p>
+          
+          <h3 class="text-3xl font-bold text-gray-600 mb-2 py-3">Detail Buku</h3>
+          
+          <!-- Detail Buku -->
+          <ul class="text-gray-700 list-disc pl-5 space-y-2">
+            <li><strong>Format:</strong> Soft cover, E-Book</li>
+            <li><strong>Jumlah Halaman:</strong> 400 halaman</li>
+            <li><strong>Tanggal Terbit:</strong> 21 Desember 2017</li>
+            <li><strong>Penerbit:</strong> Kepustakaan Populer Gramedia</li>
+            <li><strong>Penulis:</strong> Leila S. Chudori</li>
+            <li><strong>ISBN:</strong> 9786024246945</li>
+            <li><strong>Bahasa:</strong> Indonesia</li>
+            <li><strong>Berat:</strong> 0.315 kg</li>
+            <li><strong>Panjang:</strong> 20 cm</li>
+            <li><strong>Lebar:</strong> 13.5 cm</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- Section Ulasan -->
+<!-- Section Ulasan -->
+<section class="bg-gray-50 py-10">
+  <div class="container mx-auto px-6 lg:px-20">
+    <h2 class="text-3xl font-bold text-center text-gray-600 mb-6">Ulasan Pembaca</h2>
+    
+    <!-- Filter Bintang -->
+    <div class="flex justify-center space-x-2 mb-6">
+      <button onclick="filterReviews(5)" class="filter-btn bg-yellow-500 text-white py-2 px-4 rounded-lg">⭐⭐⭐⭐⭐</button>
+      <button onclick="filterReviews(4)" class="filter-btn bg-gray-300 text-gray-700 py-2 px-4 rounded-lg">⭐⭐⭐⭐</button>
+      <button onclick="filterReviews(3)" class="filter-btn bg-gray-300 text-gray-700 py-2 px-4 rounded-lg">⭐⭐⭐</button>
+      <button onclick="filterReviews(2)" class="filter-btn bg-gray-300 text-gray-700 py-2 px-4 rounded-lg">⭐⭐</button>
+      <button onclick="filterReviews(1)" class="filter-btn bg-gray-300 text-gray-700 py-2 px-4 rounded-lg">⭐</button>
+    </div>
+
+    <div id="reviewContainer">
+      <!-- Section Bintang 5 -->
+      <div class="review-section" data-rating="5">
+        <div  class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Bagian 1 -->
+          <div>
+            <img src="review/laut bercerita/1.jpg" alt="Ulasan Bintang 5 - 1" class="rounded-lg shadow-md mb-4 w-full">
+            <img src="review/laut bercerita/2.jpg" alt="Ulasan Bintang 5 - 2" class="rounded-lg shadow-md w-full">
+          </div>
+          <!-- Bagian 2 -->
+          <div>
+            <img src="review/laut bercerita/3.jpg" alt="Ulasan Bintang 4 - 1" class="rounded-lg shadow-md mb-4 w-full">
+            <img src="review/laut bercerita/4.jpg" alt="Ulasan Bintang 4 - 2" class="rounded-lg shadow-md w-full">
+          </div>
+          <!-- Bagian 3 -->
+          <div>
+            <img src="review/laut bercerita/5.jpg" alt="Ulasan Bintang 3 - 1" class="rounded-lg shadow-md mb-4 w-full">
+            <img src="review/laut bercerita/6.jpg" alt="Ulasan Bintang 3 - 2" class="rounded-lg shadow-md w-full">
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Bintang 4 -->
+      <div class="review-section hidden" data-rating="4">
+        <div  class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Bagian 1 -->
+          <div>
+            <img src="review/laut bercerita/7.jpg" alt="Ulasan Bintang 5 - 1" class="rounded-lg shadow-md mb-4 w-full">
+            <img src="review/laut bercerita/8.jpg" alt="Ulasan Bintang 5 - 2" class="rounded-lg shadow-md w-full">
+          </div>
+          <!-- Bagian 2 -->
+          <div>
+            <img src="review/laut bercerita/9.jpg" alt="Ulasan Bintang 4 - 1" class="rounded-lg shadow-md mb-4 w-full">
+            <img src="review/laut bercerita/10.jpg" alt="Ulasan Bintang 4 - 2" class="rounded-lg shadow-md w-full">
+          </div>
+          <!-- Bagian 3 -->
+          <div>
+            <img src="review/laut bercerita/11.jpg" alt="Ulasan Bintang 3 - 1" class="rounded-lg shadow-md mb-4 w-full">
+            <img src="review/laut bercerita/12.jpg" alt="Ulasan Bintang 3 - 2" class="rounded-lg shadow-md w-full">
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Bintang 3 -->
+      <div class="review-section hidden" data-rating="3">
+        <div  class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Bagian 1 -->
+          <div>
+            <img src="review/laut bercerita/15.jpg" alt="Ulasan Bintang 5 - 1" class="rounded-lg shadow-md mb-4 w-full">
+            <img src="review/laut bercerita/14.jpg" alt="Ulasan Bintang 5 - 2" class="rounded-lg shadow-md w-full">
+          </div>
+          <!-- Bagian 2 -->
+          <div>
+            <img src="review/laut bercerita/16.jpg" alt="Ulasan Bintang 4 - 1" class="rounded-lg shadow-md mb-4 w-full">
+            <img src="review/laut bercerita/18.jpg" alt="Ulasan Bintang 4 - 2" class="rounded-lg shadow-md w-full">
+          </div>
+          <!-- Bagian 3 -->
+          <div>
+            <img src="review/laut bercerita/17.jpg" alt="Ulasan Bintang 3 - 1" class="rounded-lg shadow-md mb-4 w-full">
+            <img src="review/laut bercerita/13.jpg" alt="Ulasan Bintang 3 - 2" class="rounded-lg shadow-md w-full">
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Bintang 2 -->
+      <div class="review-section hidden" data-rating="2">
+        <div  class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Bagian 1 -->
+          <div>
+            <img src="review/laut bercerita/19.jpg" alt="Ulasan Bintang 5 - 1" class="rounded-lg shadow-md mb-4 w-full">
+            <img src="review/laut bercerita/20.jpg" alt="Ulasan Bintang 5 - 2" class="rounded-lg shadow-md w-full">
+          </div>
+          <!-- Bagian 2 -->
+          <div>
+            <img src="review/laut bercerita/21.jpg" alt="Ulasan Bintang 4 - 1" class="rounded-lg shadow-md mb-4 w-full">
+            <img src="review/laut bercerita/23.jpg" alt="Ulasan Bintang 4 - 2" class="rounded-lg shadow-md w-full">
+          </div>
+          <!-- Bagian 3 -->
+          <div>
+            <img src="review/laut bercerita/22.jpg" alt="Ulasan Bintang 3 - 1" class="rounded-lg shadow-md mb-4 w-full">
+            <img src="review/laut bercerita/24.jpg" alt="Ulasan Bintang 3 - 2" class="rounded-lg shadow-md w-full">
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Bintang 1 -->
+      <div class="review-section hidden" data-rating="1">
+        <div  class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Bagian 1 -->
+          <div>
+            <img src="review/laut bercerita/25.jpg" alt="Ulasan Bintang 5 - 1" class="rounded-lg shadow-md mb-4 w-full">
+            <img src="review/laut bercerita/26.jpg" alt="Ulasan Bintang 5 - 2" class="rounded-lg shadow-md w-full">
+          </div>
+          <!-- Bagian 2 -->
+          <div>
+            <img src="review/laut bercerita/27.jpg" alt="Ulasan Bintang 4 - 1" class="rounded-lg shadow-md mb-4 w-full">
+            <img src="review/laut bercerita/28.jpg" alt="Ulasan Bintang 4 - 2" class="rounded-lg shadow-md w-full">
+          </div>
+          <!-- Bagian 3 -->
+          <div>
+            <img src="review/laut bercerita/29.jpg" alt="Ulasan Bintang 3 - 1" class="rounded-lg shadow-md mb-4 w-full">
+            <img src="review/laut bercerita/30.jpg" alt="Ulasan Bintang 3 - 2" class="rounded-lg shadow-md w-full">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="history-section" class="section-items bg-white px-16 mb-12 mt-8">
+  <h2 class="text-3xl font-bold text-gray-600 mb-10 pt-5">Buku Terkait</h2>
+  <div class="flex flex-wrap justify-center gap-8">
+    <!-- Gambar 2 -->
+    <a href="detailsegala.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg">
+        <img src="image2/history/1.jpg" alt="Image 2" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Segala Yang Diisap Langit
+          </h3>
+          <p class="book-author text-gray-600">PINTO ANUGERAH</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 3 -->
+    <a href="detailbumi.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg">
+        <img src="image2/history/3.jpg" alt="Image 3" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Bumi Manusia</h3>
+          <p class="book-author text-gray-600">Pramoedya Ananta Toer</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 4 -->
+    <a href="detailnovel.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg">
+        <img src="image2/history/5.jpg" alt="Image 4" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Novel Ronggeng Dukuh Paruk</h3>
+          <p class="book-author text-gray-600">Ahmad Tohari</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 5 -->
+    <a href="detailburungmanyar.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+        <img src="image2/history/7.jpg" alt="Image 5" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Burung - burung Manyar</h3>
+          <p class="book-author text-gray-600">Y.B. Mangunwijaya</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+  <!-- Footer -->
+  <footer id="contact" class="text-white py-4" style="background-color: rgba(17, 17, 18, 0.7);">
+    <div class="container mx-auto text-center">
+      <div class="mb-4">
+        <a href="https://web.facebook.com/gramediacom" class="mx-2 hover:underline">Facebook</a>
+        <a href="https://x.com/gramedia" class="mx-2 hover:underline">Twitter</a>
+        <a href="https://www.instagram.com/gramedia.com/" class="mx-2 hover:underline">Instagram</a>
+      </div>
+      <p>&copy; 2024 BookSphere. All rights reserved.</p>
+    </div>
+  </footer>
+
+<!-- Link Swiper JS -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+  var swiper = new Swiper('.swiper-container', {
+  direction: 'vertical',  
+  loop: false,            
+  autoplay: false,        
+  grabCursor: true,       
+});
+
+function filterReviews(star) {
+    const allSections = document.querySelectorAll('.review-section');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    // Reset tombol filter
+    filterBtns.forEach(btn => {
+      btn.classList.replace('bg-yellow-500', 'bg-gray-300');
+      btn.classList.replace('text-white', 'text-gray-700');
+    });
+
+    // Aktifkan tombol yang dipilih
+    filterBtns[5 - star].classList.replace('bg-gray-300', 'bg-yellow-500');
+    filterBtns[5 - star].classList.replace('text-gray-700', 'text-white');
+
+    // Tampilkan section sesuai bintang
+    allSections.forEach(section => {
+      if (parseInt(section.getAttribute('data-rating')) === star) {
+        section.classList.remove('hidden');
+      } else {
+        section.classList.add('hidden');
+      }
+    });
+  }
+
+  // Default filter: Bintang 5
+  window.onload = function () {
+    filterReviews(5);
+  };
+
+</script>
+
+</body>
+</html>

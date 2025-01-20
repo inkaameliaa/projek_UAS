@@ -1,0 +1,856 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style type="text/tailwindcss">
+    .grid-item {
+      @apply block px-4 py-2 hover:bg-gray-500 hover:text-white;
+    }
+    .nav-item {
+      @apply py-2 px-4 mx-4 text-white hover:text-gray-500;
+      border: 1px solid white;
+    }
+    .section-items {
+      @apply h-screen pt-20 flex flex-col items-center text-center;
+    }
+  </style>
+  <style>
+@keyframes slide-up {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-left-to-right {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s ease-in-out forwards;
+}
+
+.slide-up {
+  opacity: 0;
+  transform: translateY(50px); /* Mulai dari posisi bawah */
+}
+
+.animate-slide-left-to-right {
+  animation: slide-left-to-right 0.8s ease-out forwards;
+}
+
+.slide-left-to-right {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+
+    .nav-item.active {
+     background-color: rgba(255, 255, 255, 0.2); /* Memberi warna latar belakang yang lebih redup */
+      color: rgba(255, 255, 255, 0.8); /* Memudar warna teks */
+    }
+    .genre-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      width: 150px;
+      text-align: center;
+      box-sizing: border-box;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-radius 0.3s ease;
+      margin: 0 auto;
+      border-radius: 8px;
+    }
+
+    .genre-card:hover {
+      transform: scale(1.05); 
+       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .genre-image {
+      width: 64px;
+      height: 64px;
+      object-fit: cover;
+      margin-bottom: 0.75rem;
+    }
+
+    .genre-title {
+      display: block;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #333;
+      text-transform: capitalize;
+      margin-top: 0.75rem;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    .book-card {
+      background-color: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      width: 180px;
+      height: 300px;
+      border: 1px solid #6c6c6c;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      justify-content: space-between;
+      opacity: 0;
+      transform: translateY(0);
+    }
+
+    .book-card:hover {
+    transform: scale(1.05); /* Membesarkan card sedikit saat di-hover */
+  }
+
+    .book-image {
+      width: 94px;
+      height: 150px;
+      object-fit: cover;
+      object-position: center;
+      margin: 20px auto 0 auto;
+      border-radius: 5px;
+      pointer-events: none;
+    }
+
+    .book-info {
+      padding: 10px;
+      margin-top: auto;
+    }
+
+    .book-title {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #333;
+      margin: 0.5rem 0;
+    }
+
+    .book-author {
+      font-size: 0.9rem;
+      color: #777;
+      margin: 0;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background-color: rgba(17, 17, 18, 0.7); /* Transparansi pada background */
+    }
+  </style>
+  <title>Rekomendasi Buku</title>
+</head>
+<body class="text-gray-800">
+
+  <!-- Header yang Sticky -->
+  <header class="shadow z-50">
+    <nav class="container mx-auto py-4 px-10 flex justify-between items-center bg-opacity-80 backdrop-blur">
+      <a href="#" class="text-3xl font-bold text-gray-100">BookSphere</a>
+      <ul class="flex space-x-10">
+        <li><a href="index.html" class="nav-item">HOME</a></li>
+        <li><a href="genre.html" class="nav-item active">GENRE</a></li>
+        <li><a href="about.html" class="nav-item">ABOUT</a></li>
+        <li><a href="contact.html" class="nav-item">CONTACT</a></li>
+      </ul>
+    </nav>
+  </header>
+
+<section id="genre-section" class="h-screen py-10">
+  <h1 class="text-5xl text-center font-bold mb-5 pb-8 slide-up">G E N R E</h1>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 justify-center">
+    <!-- Genre Cards -->
+    <a href="#romance-section" class="genre-card slide-up">
+      <img src="image/genre/1.jpg" alt="Romance" class="genre-image">
+      <span class="genre-title">Romance</span>
+    </a>
+    <a href="#thriller-section" class="genre-card slide-up">
+      <img src="image/genre/3.jpg" alt="Thriller" class="genre-image">
+      <span class="genre-title">Thriller</span>
+    </a>
+    <a href="#religion-section" class="genre-card slide-up">
+      <img src="image/genre/8.jpg" alt="religion" class="genre-image">
+      <span class="genre-title">Religion</span>
+    </a>
+    <a href="#fantasy-section" class="genre-card slide-up">
+      <img src="image/genre/6.jpg" alt="Fantasy" class="genre-image">
+      <span class="genre-title">Fantasy</span>
+    </a>
+    <a href="#social-section" class="genre-card slide-up">
+      <img src="image/genre/5.jpg" alt="Social" class="genre-image">
+      <span class="genre-title">Social</span>
+    </a>
+    <a href="#history-section" class="genre-card slide-up">
+      <img src="image/genre/10.jpg" alt="History" class="genre-image">
+      <span class="genre-title">History</span>
+    </a>
+    <a href="#mystery-section" class="genre-card slide-up">
+      <img src="image/genre/4.jpg" alt="Mystery" class="genre-image">
+      <span class="genre-title">Mystery</span>
+    </a>
+    <a href="#scientific-section" class="genre-card slide-up">
+      <img src="image/genre/7.jpg" alt="Scientific" class="genre-image">
+      <span class="genre-title">Scientific</span>
+    </a>
+    <a href="#literature-section" class="genre-card slide-up">
+      <img src="image/genre/9.jpg" alt="Literature" class="genre-image">
+      <span class="genre-title">Literature</span>
+    </a>
+    <a href="#horror-section" class="genre-card slide-up">
+      <img src="image/genre/2.jpg" alt="Horror" class="genre-image">
+      <span class="genre-title">Horror</span>
+    </a>
+  </div>
+</section>
+
+<section id="romance-section" class="section-items bg-white">
+  <h2 class="text-3xl font-bold mb-5 pt-5 slide-up">Romance</h2>
+  <p class="text-gray-600 mb-10 slide-up">List of romance books will be displayed here.</p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10">
+    <!-- Gambar 1 -->
+    <a href="detaildilan.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/romance/9.jpg" alt="Image 1" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Dia adalah Dilanku Tahun 1990</h3>
+          <p class="book-author text-gray-600">Pidi Baiq</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 2 -->
+    <a href="detailberandal.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/romance/1.jpg" alt="Image 2" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">
+            Berandal<br>Bandung
+          </h3>
+          <p class="book-author text-gray-600">I. A. A. Djiiwaraga</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 3 -->
+    <a href="detailunfinished.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/romance/3.jpg" alt="Image 3" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Unfinished Business</h3>
+          <p class="book-author text-gray-600">Edwin Lucas</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 4 -->
+    <a href="detailbukanpengantin.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/romance/5.jpg" alt="Image 4" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">(Bukan) Pengantin Baru</h3>
+          <p class="book-author text-gray-600">YESSIE L. RISMAR</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 5 -->
+    <a href="detailimperfect.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/romance/7.jpg" alt="Image 5" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">(im)Perfect Serenade</h3>
+          <p class="book-author text-gray-600">Irene Dyah Respati</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section id="thriller-section" class="section-items bg-white">
+  <h2 class="text-3xl font-bold mb-5 pt-5 slide-up">Thriller</h2>
+  <p class="text-gray-600 mb-10 slide-up">List of thriller books will be displayed here.</p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10">
+    <!-- Gambar 1 -->
+    <a href="detailmortician.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/thriller/1.jpg" alt="Image 1" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">The Mortician</h3>
+          <p class="book-author text-gray-600">Ririn Ayu</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 2 -->
+    <a href="detailpembunuhan.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/thriller/3.jpg" alt="Image 2" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Murder On The Orient Express</h3>
+          <p class="book-author text-gray-600">Agatha Christie</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 3 -->
+    <a href="detailiblis.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/thriller/5.jpg" alt="Image 3" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Iblis di Pekarangan</h3>
+          <p class="book-author text-gray-600">Akiyoshi Rikako</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 4 -->
+    <a href="detailtarget.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/thriller/7.jpg" alt="Image 4" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Target of Bad Revenge</h3>
+          <p class="book-author text-gray-600">Adelia N.</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 5 -->
+    <a href="detailinto.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/thriller/9.jpg" alt="Image 5" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Into The Beneath</h3>
+          <p class="book-author text-gray-600">Rifqi Farizi</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section id="religion-section" class="section-items bg-white">
+  <h2 class="text-3xl font-bold mb-5 pt-5 slide-up">Religion</h2>
+  <p class="text-gray-600 mb-10 slide-up">List of religion books will be displayed here.</p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10">
+    <!-- Gambar 1 -->
+    <a href="detailsetop.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/religion/1.jpg" alt="Image 1" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Setop Ngomongin Rain!</h3>
+          <p class="book-author text-gray-600">Anastasha Hardi</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 2 -->
+    <a href="detailpercayalah.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/religion/3.jpg" alt="Image 2" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Percayalah Harapan Kita</h3>
+          <p class="book-author text-gray-600">Natta & Wardah</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 3 -->
+    <a href="detaildiaibu.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/religion/5.jpg" alt="Image 3" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Dia Ibu yang Harus Dihormati, Fayla!</h3>
+          <p class="book-author text-gray-600">NURILLAH ACHMAD</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 4 -->
+    <a href="detailtekad.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/religion/7.jpg" alt="Image 4" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Tekad</h3>
+          <p class="book-author text-gray-600">Azmi Askandar, Wahyudi Pratama</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 5 -->
+    <a href="detailtitip.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/religion/9.jpg" alt="Image 5" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Titip Rindu Ke Tanah Suci</h3>
+          <p class="book-author text-gray-600">Aguk Irawan M.N.</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section id="fantasy-section" class="section-items bg-white">
+  <h2 class="text-3xl font-bold mb-5 pt-5 slide-up">Fantasy</h2>
+  <p class="text-gray-600 mb-10 slide-up">List of fantasy books will be displayed here.</p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10">
+    <!-- Gambar 1 -->
+    <a href="detailsupernova.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="home/5.jpg" alt="Image 1" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Supernova: Gelombang</h3>
+          <p class="book-author text-gray-600">Dewi Lestari</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 2 -->
+    <a href="detailaldebaran.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/fantasy/1.jpg" alt="Image 2" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Aldebaran</h3>
+          <p class="book-author text-gray-600">Tere Liye</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 3 -->
+    <a href="detailpeterpen.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/fantasy/3.jpg" alt="Image 3" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Peter Pan</h3>
+          <p class="book-author text-gray-600">J.M. Barrie</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 4 -->
+    <a href="detailmelepas.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/fantasy/5.jpg" alt="Image 4" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Melepas Bintang</h3>
+          <p class="book-author text-gray-600">Hafsah Faizal</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 5 -->
+    <a href="detaildaughter.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/fantasy/7.jpg" alt="Image 5" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Daughter of the Moon Goddess</h3>
+          <p class="book-author text-gray-600">Sue Lynn Tan</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section id="social-section" class="section-items bg-white">
+  <h2 class="text-3xl font-bold mb-5 pt-5 slide-up">Social</h2>
+  <p class="text-gray-600 mb-10 slide-up">List of social books will be displayed here.</p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10">
+    <!-- Gambar 1 -->
+    <a href="detailorangorangbiasa.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="home/2.jpg" alt="Image 1" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Orang-Orang Biasa</h3>
+          <p class="book-author text-gray-600">Andrea Hirata</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 2 -->
+    <a href="detailperangrendang.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/social/1.jpg" alt="Image 2" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Perang Rendang</h3>
+          <p class="book-author text-gray-600">Revelrebel</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 3 -->
+    <a href="detailwaktuaku.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/social/3.jpg" alt="Image 3" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Waktu Aku Dilayoff</h3>
+          <p class="book-author text-gray-600">Ester Pandiangan</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 4 -->
+    <a href="detailperhatikan.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/social/5.jpg" alt="Image 4" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Perhatikan Celah Peron</h3>
+          <p class="book-author text-gray-600">Sashi Kirana</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 5 -->
+    <a href="detailbehind.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image/social/7.jpg" alt="Image 5" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Behind the Scenes</h3>
+          <p class="book-author text-gray-600">Bella Pustika</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section id="history-section" class="section-items bg-white">
+  <h2 class="text-3xl font-bold mb-5 pt-5 slide-up">History</h2>
+  <p class="text-gray-600 mb-10 slide-up">List of history books will be displayed here.</p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10">
+    <!-- Gambar 1 -->
+    <a href="detaillautbercerita.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="home/1.jpg" alt="Image 1" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Laut Bercerita</h3>
+          <p class="book-author text-gray-600">Leila S. Chudori</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 2 -->
+    <a href="detailsegala.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image2/history/1.jpg" alt="Image 2" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Segala Yang Diisap Langit
+          </h3>
+          <p class="book-author text-gray-600">PINTO ANUGERAH</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 3 -->
+    <a href="detailbumi.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image2/history/3.jpg" alt="Image 3" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Bumi Manusia</h3>
+          <p class="book-author text-gray-600">Pramoedya Ananta Toer</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 4 -->
+    <a href="detailnovel.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image2/history/5.jpg" alt="Image 4" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Novel Ronggeng Dukuh Paruk</h3>
+          <p class="book-author text-gray-600">Ahmad Tohari</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 5 -->
+    <a href="detailburungmanyar.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image2/history/7.jpg" alt="Image 5" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Burung - burung Manyar</h3>
+          <p class="book-author text-gray-600">Y.B. Mangunwijaya</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section id="mystery-section" class="section-items bg-white">
+  <h2 class="text-3xl font-bold mb-5 pt-5 slide-up">Mystery</h2>
+  <p class="text-gray-600 mb-10 slide-up">List of mystery books will be displayed here.</p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10">
+    <!-- Gambar 1 -->
+    <a href="detailblackshowman.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="home/7.jpg" alt="Image 1" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Black Showman Dan Pembunuhan</h3>
+          <p class="book-author text-gray-600">Keigo Higashino</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 2 -->
+    <a href="detailthefifth.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image2/mystery/1.jpg" alt="Image 2" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">The Fifth to Die</h3>
+          <p class="book-author text-gray-600">J.D. Barker</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 3 -->
+    <a href="detailmisteri.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image2/mystery/3.jpg" alt="Image 3" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Misteri Bilik Korek Api</h3>
+          <p class="book-author text-gray-600">Ruwi Meita</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 4 -->
+    <a href="detailsimpul.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image2/mystery/5.jpg" alt="Image 4" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Simpul-Simpul Terurai</h3>
+          <p class="book-author text-gray-600">Baroness Orczy</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 5 -->
+    <a href="detailkidung.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image2/mystery/7.jpg" alt="Image 5" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Kidung dalam Kabut</h3>
+          <p class="book-author text-gray-600">Naila Fauzia</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section id="scientific-section" class="section-items bg-white">
+  <h2 class="text-3xl font-bold mb-5 pt-5 slide-up">Scientific</h2>
+  <p class="text-gray-600 mb-10 slide-up">List of scientific books will be displayed here.</p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10">
+    <!-- Gambar 1 -->
+    <a href="detailrumahkaca.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="home/9.jpg" alt="Image 1" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Rumah Kaca di Ujung Bumi</h3>
+          <p class="book-author text-gray-600">Kim Choyeopo</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 2 -->
+    <a href="detailtheschool.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image2/scientific/1.jpg" alt="Image 2" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">The School for Good Mothers</h3>
+          <p class="book-author text-gray-600">Jessamine Chan</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 3 -->
+    <a href="detailthestar.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image2/scientific/3.jpg" alt="Image 3" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">The Star Diaries</h3>
+          <p class="book-author text-gray-600">Stanislaw Lem</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 4 -->
+    <a href="detail1984.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image2/scientific/5.jpg" alt="Image 4" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">1984</h3>
+          <p class="book-author text-gray-600">George Orwell</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 5 -->
+    <a href="detaillelap.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image2/scientific/7.jpg" alt="Image 5" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Lelap dalam Lautan Bintang</h3>
+          <p class="book-author text-gray-600">Christopher Paolini</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section id="literature-section" class="section-items bg-white">
+  <h2 class="text-3xl font-bold mb-5 pt-5 slide-up">Literature</h2>
+  <p class="text-gray-600 mb-10 slide-up">List of literature books will be displayed here.</p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10">
+    <!-- Gambar 1 -->
+    <a href="detailsayappatah.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="home/10.jpg" alt="Image 1" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Sayap-Sayap Patah</h3>
+          <p class="book-author text-gray-600">Kahlil Gibran</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 2 -->
+    <a href="detailseratus.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image2/literature/1.jpg" alt="Image 2" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Seratus Tahun Kesunyian</h3>
+          <p class="book-author text-gray-600">Gabriel Garcia</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 3 -->
+    <a href="detailwaktu.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image2/literature/3.jpg" alt="Image 3" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Waktu Itu Hujan Rintik</h3>
+          <p class="book-author text-gray-600">T. Agus Khaidir</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 4 -->
+    <a href="detailanak.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image2/literature/5.jpg" alt="Image 4" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Anak-Anak Semar</h3>
+          <p class="book-author text-gray-600">Sindhunata</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 5 -->
+    <a href="detailburung.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image2/literature/7.jpg" alt="Image 5" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Burung Berpagut Emas</h3>
+          <p class="book-author text-gray-600">Buyan Perkasa</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section id="horror-section" class="section-items bg-white">
+  <h2 class="text-3xl font-bold mb-5 pt-5 slide-up">Horror</h2>
+  <p class="text-gray-600 mb-10 slide-up">List of horror books will be displayed here.</p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10">
+    <!-- Gambar 1 -->
+    <a href="detailkultus.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="home/8.jpg" alt="Image 1" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Kultus Tanah Hitam</h3>
+          <p class="book-author text-gray-600">Jejak Dunia Arwah</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 2 -->
+    <a href="detailditanah.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image2/horror/1.jpg" alt="Image 2" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Di Tanah Berhala</h3>
+          <p class="book-author text-gray-600">Tessia</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 3 -->
+    <a href="detailtetangga.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image2/horror/3.jpg" alt="Image 3" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Tetangga Kanibal</h3>
+          <p class="book-author text-gray-600">Erby S.</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 4 -->
+    <a href="detailrestoran.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image2/horror/5.jpg" alt="Image 4" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Restoran Terkutuk</h3>
+          <p class="book-author text-gray-600">Eve Shi</p>
+        </div>
+      </div>
+    </a>
+    <!-- Gambar 5 -->
+    <a href="detailtoreh.html" class="block">
+      <div class="book-card transform transition duration-300 hover:scale-105 hover:shadow-lg slide-up">
+        <img src="image2/horror/7.jpg" alt="Image 5" class="book-image rounded-lg">
+        <div class="book-info mt-2 text-center">
+          <h3 class="book-title font-semibold text-gray-800">Toreh Topeng Darah</h3>
+          <p class="book-author text-gray-600">Rako Prijanto</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<footer id="contact" class="text-white py-4" style="background-color: rgba(17, 17, 18, 0.7);">
+  <div class="container mx-auto text-center">
+    <div class="mb-4">
+      <a href="https://web.facebook.com/gramediacom" class="mx-2 hover:underline">Facebook</a>
+      <a href="https://x.com/gramedia" class="mx-2 hover:underline">Twitter</a>
+      <a href="https://www.instagram.com/gramedia.com/" class="mx-2 hover:underline">Instagram</a>
+    </div>
+    <p>&copy; 2024 BookSphere. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  // Pilih elemen dengan kelas .slide-up dan .slide-left-to-right
+  const slideUpElements = document.querySelectorAll('.slide-up');
+  const slideLeftToRightElements = document.querySelectorAll('.slide-left-to-right');
+  
+  // Fungsi untuk menambahkan animasi slide-up
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-slide-up');
+        } else {
+          entry.target.classList.remove('animate-slide-up');
+        }
+      });
+    },
+    { threshold: 0.2 } // Ketika 20% elemen terlihat di viewport
+  );
+
+  // Fungsi untuk menambahkan animasi slide-left-to-right
+  const leftToRightObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-slide-left-to-right');
+        } else {
+          entry.target.classList.remove('animate-slide-left-to-right');
+        }
+      });
+    },
+    { threshold: 0.2 } // Ketika 20% elemen terlihat di viewport
+  );
+
+  // Amati elemen slide-up
+  slideUpElements.forEach((element) => {
+    observer.observe(element);
+  });
+
+  // Amati elemen slide-left-to-right
+  slideLeftToRightElements.forEach((element) => {
+    leftToRightObserver.observe(element);
+  });
+});
+</script>
+
+</body>
+</html>

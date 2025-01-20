@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <style type="text/tailwindcss">
+    .grid-item {
+      @apply block px-4 py-2 hover:bg-gray-500 hover:text-white;
+    }
+    .nav-item {
+    @apply py-2 px-4 mx-4 text-white hover:text-gray-500;
+    border: 1px solid white;
+    }
+
+  </style>
+  <style>
+    @keyframes slide-up {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-left-to-right {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.nav-item.active {
+  background-color: rgba(255, 255, 255, 0.2); /* Memberi warna latar belakang yang lebih redup */
+  color: rgba(255, 255, 255, 0.8); /* Memudar warna teks */
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s ease-in-out forwards;
+}
+
+.slide-up {
+  opacity: 0;
+  transform: translateY(50px); /* Mulai dari posisi bawah */
+}
+
+.animate-slide-left-to-right {
+  animation: slide-left-to-right 0.8s ease-out forwards;
+}
+
+.slide-left-to-right {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+
+.book-container:nth-child(odd) .slide-up {
+  animation-delay: 0s; /* Kotak pertama pada sisi kiri */
+}
+
+.book-container:nth-child(even) .slide-up {
+  animation-delay: 0.3s; /* Kotak kedua pada sisi kiri atau kotak pertama pada sisi kanan */
+}
+
+    .truncate-multiline {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: normal;
+    }
+
+    .book-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 20px;
+      padding-left: 30px;
+      background-color: rgb(255, 255, 255);
+      border-radius: 15px;
+      border: 1px solid #ccc;
+      max-width: 500px;
+      width: 100%;
+      height: 300px;
+    }
+
+    .book-img {
+      width: 120px;
+      height: 191px;
+      margin-right: 20px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .book-info {
+      max-width: 300px;
+    }
+
+    #home {
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)), url('home/polarr.jpg') no-repeat center center/cover;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+
+    #home h3 {
+      font-size: 3rem;
+      font-weight: bold;
+      text-align: left;
+      margin-bottom: 20px;
+      line-height: 1.2;
+      max-width: none;
+      padding-left: 20px;
+    }
+
+    .outline-text {
+      color: transparent; /* Isi teks transparan */
+       -webkit-text-stroke: 1px white; /* Border teks putih */
+      text-transform: uppercase; /* Pastikan teks dalam huruf kapital */
+    }
+
+    .vertical-line {
+  position: absolute;
+  left: 50px; /* Posisi garis di 50px dari sisi kiri */
+  top: 15%; /* Menurunkan garis ke bawah supaya berada di tengah-tengah */
+  bottom: 15%; /* Menjaga agar garis tetap dalam batas yang tepat */
+  width: 6px; /* Lebar garis yang lebih tebal */
+  background-color: white; /* Warna garis putih */
+  height: 50%; /* Tinggi garis 70% dari tinggi section */
+}
+
+    section {
+      position: relative;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background-color: rgba(17, 17, 18, 0.7); /* Transparansi pada background */
+    }
+  </style>
+  <title>Rekomendasi Buku</title>
+</head>
+<body class="text-gray-800">
+
+  <!-- Header yang Sticky -->
+  <header class="shadow z-50">
+    <nav class="container mx-auto py-4 px-10 flex justify-between items-center bg-opacity-80 backdrop-blur">
+      <a href="#" class="text-3xl font-bold text-gray-100">BookSphere</a>
+      <ul class="flex space-x-10">
+        <li><a href="index.html" class="nav-item active">HOME</a></li>
+        <li><a href="genre.html" class="nav-item">GENRE</a></li>
+        <li><a href="about.html" class="nav-item">ABOUT</a></li>
+        <li><a href="contact.html" class="nav-item">CONTACT</a></li>
+      </ul>
+    </nav>
+  </header>
+
+<section id="home" class="h-screen flex items-start justify-center relative">
+  <!-- Garis vertikal -->
+  <div class="vertical-line"></div>
+  
+  <div class="container mx-auto text-left text-white pt-20">
+      <div class="mx-auto w-3/4">
+          <h3 class="mb-4 slide-up">JELAJAHI BUKU FIKSI<br>PALING POPULER KARYA<br><span class="outline-text">PENULIS INDONESIA</span></h3>
+          <a href="#popular-books" id="explore-button" class="bg-red-500 ml-5 mt-7 text-white py-2 px-5 rounded-xl hover:bg-red-700 hover:text-white slide-up inline-block">Explore</a>
+      </div>
+  </div>
+</section>
+
+  <section id="popular-books" class="py-20 px-10 relative" style="background-color: rgba(255, 255, 255, 0.87);">
+    <div class="container mx-auto">
+      <h3 class="text-5xl font-bold text-center mb-5 slide-up">Populer</h3>
+      <p class="text-gray-500 text-center mb-10 slide-up">Temukan buku-buku yang paling banyak dibaca dan dibicarakan.</p>
+      <div class="flex flex-wrap">
+        <!-- Sisi Kiri -->
+        <div class="w-1/2 flex flex-col items-center">
+          <div class="book-container slide-up mb-8">
+            <img class="book-img" src="home/1.jpg" alt="Buku 1">
+            <div class="book-info">
+              <p class="text-blue-500 font-semibold text-2xl mb-2">#history</p>
+              <h4 class="text-2xl font-bold mb-2">Laut Bercerita</h4>
+              <h5 class="text-l font-semibold mb-5">Leila S. Chudori</h5>
+              <p class="text-gray-500 mb-5 truncate-multiline text-justify">Buku ini terdiri atas dua bagian. Bagian pertama mengambil sudut pandang seorang mahasiswa aktivis bernama Laut, menceritakan bagaimana Laut dan kawan-kawannya...</p>
+              <a href="detaillautbercerita.html" class="hover:text-gray-500">Read More</a>
+            </div>
+          </div>
+          <div class="book-container slide-up mb-8">
+            <img class="book-img" src="home/2.jpg" alt="Buku 2">
+            <div class="book-info">
+              <p class="text-blue-500 font-semibold text-2xl mb-2">#social</p>
+              <h4 class="text-2xl font-bold mb-2">Orang-Orang Biasa</h4>
+              <h5 class="text-l font-semibold mb-5">Andrea Hirata</h5>
+              <p class="text-gray-500 mb-5 truncate-multiline text-justify">Sebatang kapur dan penghapus tergeletak di bawah papan tulis itu. Tampak benar telah sangat lama tak dipakai. Demikian minim angka-angka itu..</p>
+              <a href="detailorangorangbiasa.html" class="hover:text-gray-500">Read More</a>
+            </div>
+          </div>
+          <div class="book-container slide-up mb-8">
+            <img class="book-img" src="image/religion/1.jpg" alt="Buku 3">
+            <div class="book-info">
+              <p class="text-blue-500 font-semibold text-2xl mb-2">#religion</p>
+              <h4 class="text-2xl font-bold mb-2">Setop Ngomongin Rain!</h4>
+              <h5 class="text-l font-semibold mb-5">Anastasha Hardi</h5>
+              <p class="text-gray-500 mb-5 truncate-multiline text-justify">Hidup Rain yang serbamewah—punya subscriber puluhan ribu di akun YouTube-nya, jutaan viewers untuk acara bertajuk, “Hamba Sahaya Rain”—harus berakhir pada sebuah malam tragis...</p>
+              <a href="detailsetop.html" class="hover:text-gray-500">Read More</a>
+            </div>
+          </div>
+          <div class="book-container slide-up mb-8">
+            <img class="book-img" src="image/romance/9.jpg" alt="Buku 4">
+            <div class="book-info">
+              <p class="text-blue-500 font-semibold text-2xl mb-2">#romance</p>
+              <h4 class="text-2xl font-bold mb-2">Dia adalah Dilanku Tahun 1990</h4>
+              <h5 class="text-l font-semibold mb-5">Pidi Baiq</h5>
+              <p class="text-gray-500 mb-5 truncate-multiline text-justify">Novel “Dilan: Dia adalah Dilanku Tahun 1990” menceritakan kilas balik Milea pada tahun 1990. Pada tahun tersebut, Milea...</p>
+              <a href="detaildilan.html" class="hover:text-gray-500">Read More</a>
+            </div>
+          </div>
+          <div class="book-container slide-up mb-8">
+            <img class="book-img" src="home/5.jpg" alt="Buku 5">
+            <div class="book-info">
+              <p class="text-blue-500 font-semibold text-2xl mb-2">#fantasy</p>
+              <h4 class="text-2xl font-bold mb-2">Supernova: Gelombang</h4>
+              <h5 class="text-l font-semibold mb-5">Dee Lestari</h5>
+              <p class="text-gray-500 mb-5 truncate-multiline text-justify">Sebuah upacara gondang mengubah segalanya bagi Alfa. Makhluk misterius yang disebut Si Jaga Portibi tiba-tiba muncul menghantuinya...</p>
+              <a href="detailsupernova.html" class="hover:text-gray-500">Read More</a>
+            </div>
+          </div>
+        </div>
+        <!-- Sisi Kanan -->
+        <div class="w-1/2 flex flex-col items-center">
+          <div class="book-container slide-up mb-8">
+            <img class="book-img" src="image/thriller/1.jpg" alt="Buku 6">
+            <div class="book-info">
+              <p class="text-blue-500 font-semibold text-2xl mb-2">#thriller</p>
+              <h4 class="text-2xl font-bold mb-2">The Mortician</h4>
+              <h5 class="text-l font-semibold mb-5">Ririn Ayu</h5>
+              <p class="text-gray-500 mb-5 truncate-multiline text-justify">Noah Hasler menyukai kematian. Demi mencapai tujuannya untuk lebih sering melihat mayat, dia pindah ke Andermatt sebagai perias mayat...</p>
+              <a href="detailmortician.html" class="hover:text-gray-500">Read More</a>
+            </div>
+          </div>
+          <div class="book-container slide-up mb-8">
+            <img class="book-img" src="home/7.jpg" alt="Buku 7">
+            <div class="book-info">
+              <p class="text-blue-500 font-semibold text-2xl mb-2">#mystery</p>
+              <h4 class="text-2xl font-bold mb-2">Black Showman dan Pembunuhan di Kota</h4>
+              <h5 class="text-l font-semibold mb-5">Keigo Higashino</h5>
+              <p class="text-gray-500 mb-5 truncate-multiline text-justify">“Black Showman dan Pembunuhan di Kota Tak Bernama” merupakan novel misteri karya Keigo Higashino, penulis seri Detektif...</p>
+              <a href="detailblackshowman.html" class="hover:text-gray-500">Read More</a>
+            </div>
+          </div>
+          <div class="book-container slide-up mb-8">
+            <img class="book-img" src="home/8.jpg" alt="Buku 8">
+            <div class="book-info">
+              <p class="text-blue-500 font-semibold text-2xl mb-2">#horror</p>
+              <h4 class="text-2xl font-bold mb-2">Kultus Tanah Hitam</h4>
+              <h5 class="text-l font-semibold mb-5">Jejak Dunia Arwah</h5>
+              <p class="text-gray-500 mb-5 truncate-multiline text-justify">Apakah kalian percaya bahwa ada jasad yang tidak bisa musnah?Kami telah mencoba segalanya. Mulai dari menguburnya...</p>
+              <a href="detailkultus.html" class="hover:text-gray-500">Read More</a>
+            </div>
+          </div>
+          <div class="book-container slide-up mb-8">
+            <img class="book-img" src="home/9.jpg" alt="Buku 9">
+            <div class="book-info">
+              <p class="text-blue-500 font-semibold text-2xl mb-2">#scientific</p>
+              <h4 class="text-2xl font-bold mb-2">Rumah Kaca di Ujung Bumi</h4>
+              <h5 class="text-l font-semibold mb-5">Kim Choyeop</h5>
+              <p class="text-gray-500 mb-5 truncate-multiline text-justify">Tahun 2058. Bumi hancur akibat serangan dust—debu beracun yang mematikan. Manusia berlindung di dalam kota-kota kubah...</p>
+              <a href="detailrumahkaca.html" class="hover:text-gray-500">Read More</a>
+            </div>
+          </div>
+          <div class="book-container slide-up mb-8">
+            <img class="book-img" src="home/10.jpg" alt="Buku 10">
+            <div class="book-info">
+              <p class="text-blue-500 font-semibold text-2xl mb-2">#literature</p>
+              <h4 class="text-2xl font-bold mb-2">Sayap-Sayap Patah</h4>
+              <h5 class="text-l font-semibold mb-5">Kahlil Gibran</h5>
+              <p class="text-gray-500 mb-5 truncate-multiline text-justify">Buku Sayap-sayap Patah yang merupakan novel puitis ini berjudul asli al-Ajniha al-Mutakassira, atau dalam...</p>
+              <a href="detailsayappatah.html" class="hover:text-gray-500">Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="flex flex-col px-10 h-screen mb-12">
+    <!-- Teks Resource di atas -->
+    <p class="text-l text-gray-500 ml-6 mt-4 slide-left-to-right">RESOURCES</p>
+    <p class="text-5xl font-bold text-black ml-6 mt-4 slide-left-to-right">Latest Article</p>
+    <!-- Konten dua sisi (kanan kiri) -->
+    <div class="flex h-full">
+        <!-- Sisi Kiri: Gambar dan informasi -->
+        <div class="w-1/2 p-6 bg-white slide-up">
+            <img src="review/A1.jpg" alt="Gambar Artikel" class="w-full h-64 object-cover rounded-md mb-4">
+            <p class="text-s text-gray-500">Hypeabis</p>
+            <p class="text-2xl font-semibold mt-2">
+              <a href="https://hypeabis.id/read/45752/8-penulis-dunia-paling-terkenal-sepanjang-masa-ernest-hemingway-hingga-agatha-christie" class="text-black hover:underline">
+                  8 Penulis Dunia Paling Terkenal Sepanjang Masa, Ernest Hemingway hingga Agatha Christie
+              </a>
+          </p>
+            <p class="text-s text-gray-600 mt-2">Luke Andaresta</p>
+        </div>
+
+        <!-- Sisi Kanan: Tempat untuk konten lainnya -->
+        <div class="w-1/2 p-6 bg-white">
+            <!-- Gambar 1 -->
+            <div class="flex items-center space-x-4 mb-4 slide-left-to-right">
+              <img src="review/A2.jpg" alt="Gambar 1" class="w-32 h-32 object-cover rounded-md">
+              <div>
+                  <p class="text-xs text-gray-500">Kompasiana</p>
+                  <p class="text-2xl font-semibold mt-1">
+                    <a href="https://www.kompasiana.com/uswatunkhasanah4280/678851c8c925c473396ed803/cara-menjadi-penulis-yang-sukses" class="text-black hover:underline">
+                      Rahasia Menjadi Penulis Hebat: Langkah Mudah Menuju Kesuksesan
+                    </a>
+                </p>
+                  <p class="text-xs text-gray-600 mt-1">Uswatun Khasanah</p>
+              </div>
+          </div>
+          <!-- Gambar 2 -->
+          <div class="flex items-center space-x-4 mb-4 slide-left-to-right">
+              <img src="review/A3.jpg" alt="Gambar 2" class="w-32 h-32 object-cover rounded-md">
+              <div>
+                  <p class="text-xs text-gray-500">loker.id</p>
+                  <p class="text-2xl font-semibold mt-1">
+                    <a href="https://www.loker.id/artikel/mengulik-dapur-editor-fiksi-bareng-kania-nabila-f" class="text-black hover:underline">
+                      Mengulik Dapur Editor Fiksi Bareng Kania Nabila F
+                    </a>
+                </p>
+                  <p class="text-xs text-gray-600 mt-1">Rubrik Profil</p>
+              </div>
+          </div>
+          <!-- Gambar 3 -->
+          <div class="flex items-center space-x-4 mb-4 slide-left-to-right">
+              <img src="review/A4.jpg" alt="Gambar 3" class="w-32 h-32 object-cover rounded-md">
+              <div>
+                  <p class="text-xs text-gray-500">Ragam Info</p>
+                  <p class="text-2xl font-semibold mt-1">
+                    <a href="https://kumparan.com/ragam-info/amanat-novel-laut-bercerita-novel-karangan-leila-s-chudori-24KLSBMgWaI" class="text-black hover:underline">
+                      Amanat Novel Laut Bercerita, Novel Karangan Leila S. Chudori
+                    </a>
+                </p>
+                  <p class="text-xs text-gray-600 mt-1">Tim Editor</p>
+              </div>
+          </div>
+        </div>
+</section>
+
+  <footer id="contact" class="text-white py-4" style="background-color: rgba(17, 17, 18, 0.7);">
+    <div class="container mx-auto text-center">
+      <div class="mb-4">
+        <a href="https://web.facebook.com/gramediacom" class="mx-2 hover:underline">Facebook</a>
+        <a href="https://x.com/gramedia" class="mx-2 hover:underline">Twitter</a>
+        <a href="https://www.instagram.com/gramedia.com/" class="mx-2 hover:underline">Instagram</a>
+      </div>
+      <p>&copy; 2024 BookSphere. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script>
+    window.onload = function() {
+      // Cek apakah alert sudah pernah ditampilkan di sesi ini
+      if (!sessionStorage.getItem('alertShown')) {
+        alert("Selamat datang di halaman BookSphere!");
+        // Tandai bahwa alert sudah ditampilkan di sesi ini
+        sessionStorage.setItem('alertShown', 'true');
+      }
+    };
+  
+    document.addEventListener('DOMContentLoaded', () => {
+  // Pilih elemen dengan kelas .slide-up dan .slide-left-to-right
+  const slideUpElements = document.querySelectorAll('.slide-up');
+  const slideLeftToRightElements = document.querySelectorAll('.slide-left-to-right');
+  
+  // Fungsi untuk menambahkan animasi slide-up
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-slide-up');
+        } else {
+          entry.target.classList.remove('animate-slide-up');
+        }
+      });
+    },
+    { threshold: 0.2 } // Ketika 20% elemen terlihat di viewport
+  );
+
+  // Fungsi untuk menambahkan animasi slide-left-to-right
+  const leftToRightObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-slide-left-to-right');
+        } else {
+          entry.target.classList.remove('animate-slide-left-to-right');
+        }
+      });
+    },
+    { threshold: 0.2 } // Ketika 20% elemen terlihat di viewport
+  );
+
+  // Amati elemen slide-up
+  slideUpElements.forEach((element) => {
+    observer.observe(element);
+  });
+
+  // Amati elemen slide-left-to-right
+  slideLeftToRightElements.forEach((element) => {
+    leftToRightObserver.observe(element);
+  });
+});
+
+</script>  
+  
+</body>
+</html>

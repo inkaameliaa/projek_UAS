@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <style type="text/tailwindcss">
+    .grid-item {
+      @apply block px-4 py-2 hover:bg-gray-500 hover:text-white;
+    }
+    .nav-item {
+      @apply py-2 px-4 mx-4 text-white hover:text-gray-500;
+      border: 1px solid white;
+    }
+
+    @keyframes slide-up {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-left-to-right {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.nav-item.active {
+  background-color: rgba(255, 255, 255, 0.2); /* Memberi warna latar belakang yang lebih redup */
+  color: rgba(255, 255, 255, 0.8); /* Memudar warna teks */
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s ease-in-out forwards;
+}
+
+.slide-up {
+  opacity: 0;
+  transform: translateY(50px); /* Mulai dari posisi bawah */
+}
+
+.animate-slide-left-to-right {
+  animation: slide-left-to-right 0.8s ease-out forwards;
+}
+
+.slide-left-to-right {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background-color: rgba(17, 17, 18, 0.7);
+    }
+
+    .text-bordered {
+      -webkit-text-stroke: 1px #6e6e6e; /* Menambahkan border pada teks */
+      color: transparent; /* Menghilangkan warna teks (sehingga hanya border yang terlihat) */
+    }
+  </style>
+  <title>About - BookSphere</title>
+</head>
+<body class="text-gray-800">
+
+  <!-- Header yang Sticky -->
+  <header class="shadow z-50">
+    <nav class="container mx-auto py-4 px-10 flex justify-between items-center bg-opacity-80 backdrop-blur">
+      <a href="#" class="text-3xl font-bold text-gray-100">BookSphere</a>
+      <ul class="flex space-x-10">
+        <li><a href="index.html" class="nav-item">HOME</a></li>
+        <li><a href="genre.html" class="nav-item">GENRE</a></li>
+        <li><a href="about.html" class="nav-item active">ABOUT</a></li>
+        <li><a href="contact.html" class="nav-item">CONTACT</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Konten Halaman About -->
+  <main class="container mx-auto my-10 px-6 lg:px-20">
+    <div class="container mx-auto my-10 px-4 pt-10 lg:px-12">
+      <div class="flex items-start">
+        <!-- Bagian kiri (5/8) -->
+        <div class="basis-5/8">
+          <p class="text-sm text-gray-500 uppercase slide-left-to-right">About</p>
+          <h1 class="text-5xl font-bold text-gray-800 slide-left-to-right">Book</h1>
+          <h1 class="text-5xl font-bold pl-16 text-bordered slide-left-to-right">Sphere</h1>
+        </div>
+        <!-- Bagian kanan (3/8) -->
+        <div class="basis-3/8 ml-8">
+          <p class="text-lg text-gray-700 pl-12 text-justify leading-relaxed slide-left-to-right">
+            Platform eksklusif untuk buku fiksi, menciptakan ruang bagi pembaca untuk menemukan karya inspiratif. Kami menyediakan rekomendasi dari berbagai genre seperti fiksi ilmiah, fantasi, roman, misteri, dan horor, memungkinkan pengalaman membaca yang mendalam, memikat, dan penuh imajinasi. Luaskan wawasan Anda dengan cerita-cerita yang mengagumkan dan penuh inspirasi.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gambar pertama (tidak terbagi) -->
+    <div class="my-4 slide-up">
+      <img src="about/1.jpg" alt="Gambar 1" class="w-full h-auto rounded-lg">
+    </div>
+
+    <!-- Gambar kedua dan seterusnya (dibagi menjadi dua sisi) -->
+    <div class="my-4">
+      <div class="flex space-x-4">
+        <!-- Gambar kiri -->
+        <div class="flex-1">
+          <img src="about/2.jpg" alt="Gambar 2" class="w-full h-auto mb-4 rounded-lg slide-up">
+          <img src="about/3.jpg" alt="Gambar 3" class="w-full h-auto rounded-lg slide-up">
+        </div>
+        <!-- Gambar kanan -->
+        <div class="flex-1 ">
+          <img src="about/4.jpg" alt="Gambar 4" class="w-full h-auto rounded-lg slide-up">
+        </div>
+      </div>
+    </div>
+
+    <!-- Kotak 1, Kotak 2, dan Kotak 3 -->
+    <div class="mt-10">
+      <div class="flex space-x-4">
+        <!-- Kotak pertama -->
+        <div class="flex-1 bg-white rounded-lg">
+          <img src="gambar-about/1.png" alt="Gambar 5" class="w-full h-48 object-cover rounded-t-lg slide-up">
+          <div class="p-4">
+            <h3 class="text-xl font-semibold text-center text-gray-800 slide-up">Vission & Mision</h3>
+            <p class="text-gray-600 text-center mt-2 slide-up">Menjadi platform utama untuk rekomendasi buku fiksi yang menginspirasi pembaca dan menyediakan rekomendasi buku fiksi dari berbagai genre.</p>
+          </div>
+        </div>
+
+        <!-- Kotak kedua -->
+        <div class="flex-1 bg-white rounded-lg">
+          <img src="gambar-about/2.png" alt="Gambar 6" class="w-full h-48 object-cover rounded-t-lg slide-up">
+          <div class="p-4">
+            <h3 class="text-xl font-semibold text-center text-gray-800 slide-up">Our Team</h3>
+            <p class="text-gray-600 text-center mt-2 slide-up">Tim kami terdiri dari para profesional yang berpengalaman di bidang literasi, bekerja bersama untuk memberikan pengalaman membaca yang inspiratif.</p>
+          </div>
+        </div>
+
+        <!-- Kotak ketiga -->
+        <div class="flex-1 bg-white rounded-lg">
+          <img src="gambar-about/3.png" alt="Gambar 7" class="w-full h-48 object-cover rounded-t-lg slide-up">
+          <div class="p-4">
+            <h3 class="text-xl font-semibold text-center text-gray-800 slide-up">Why Choose Us?</h3>
+            <p class="text-gray-600 text-center mt-2 slide-up">Kami menawarkan rekomendasi buku fiksi berkualitas dari berbagai genre, disesuaikan dengan minat, preferensi pembaca dan memperkaya wawasan Anda.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer id="contact" class="text-white py-4" style="background-color: rgba(17, 17, 18, 0.7);">
+    <div class="container mx-auto text-center">
+      <div class="mb-4">
+        <a href="https://web.facebook.com/gramediacom" class="mx-2 hover:underline">Facebook</a>
+        <a href="https://x.com/gramedia" class="mx-2 hover:underline">Twitter</a>
+        <a href="https://www.instagram.com/gramedia.com/" class="mx-2 hover:underline">Instagram</a>
+      </div>
+      <p>&copy; 2024 BookSphere. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+  // Pilih elemen dengan kelas .slide-up dan .slide-left-to-right
+  const slideUpElements = document.querySelectorAll('.slide-up');
+  const slideLeftToRightElements = document.querySelectorAll('.slide-left-to-right');
+  
+  // Fungsi untuk menambahkan animasi slide-up
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-slide-up');
+        } else {
+          entry.target.classList.remove('animate-slide-up');
+        }
+      });
+    },
+    { threshold: 0.2 } // Ketika 20% elemen terlihat di viewport
+  );
+
+  // Fungsi untuk menambahkan animasi slide-left-to-right
+  const leftToRightObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-slide-left-to-right');
+        } else {
+          entry.target.classList.remove('animate-slide-left-to-right');
+        }
+      });
+    },
+    { threshold: 0.2 } // Ketika 20% elemen terlihat di viewport
+  );
+
+  // Amati elemen slide-up
+  slideUpElements.forEach((element) => {
+    observer.observe(element);
+  });
+
+  // Amati elemen slide-left-to-right
+  slideLeftToRightElements.forEach((element) => {
+    leftToRightObserver.observe(element);
+  });
+});
+  </script>
+</body>
+</html>
